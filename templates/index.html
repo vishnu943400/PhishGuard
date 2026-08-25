@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phishing Email Classifier</title>
+
+  <!-- Bootstrap for styling (saved locally in static/vendor so the app works without internet) -->
+  <link href="{{ url_for('static', filename='vendor/bootstrap.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container py-5">
+
+  <div class="text-center mb-4">
+    <h1>Phishing Email Classifier</h1>
+    <p class="text-muted">Paste an email below to check if it is Ham (legitimate) or Spam / Phishing.</p>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <label for="email-text" class="form-label">Email text (subject + body)</label>
+      <textarea id="email-text" class="form-control mb-3" rows="8" placeholder="Paste the email here..."></textarea>
+
+      <div class="d-flex align-items-center flex-wrap gap-2">
+        <button id="classify-btn" class="btn btn-primary">Classify</button>
+        <button id="clear-btn" class="btn btn-outline-secondary">Clear</button>
+
+        <div class="form-check form-switch ms-auto">
+          <input class="form-check-input" type="checkbox" id="compare-toggle">
+          <label class="form-check-label" for="compare-toggle">Compare models</label>
+        </div>
+      </div>
+
+      <div id="error-msg" class="text-danger mt-2"></div>
+    </div>
+  </div>
+
+  <div id="loading" class="text-center text-muted mb-4" hidden>
+    Classifying...
+  </div>
+
+  <!-- Single best-model result -->
+  <div id="result-card" class="card shadow-sm mb-4" hidden>
+    <div class="card-body">
+      <h5 class="card-title">Result <small class="text-muted">(using {{ best_model_name }})</small></h5>
+
+      <div id="verdict" class="alert" role="alert"></div>
+
+      <p class="mb-1">Confidence: <strong id="confidence-value">--</strong>%</p>
+      <div class="progress" style="height: 20px;">
+        <div id="confidence-bar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Compare-all-models table -->
+  <div id="compare-card" class="card shadow-sm mb-4" hidden>
+    <div class="card-body">
+      <h5 class="card-title">Model Comparison</h5>
+      <table class="table table-striped">
+        <thead>
+          <tr><th>Model</th><th>Prediction</th><th>Confidence</th></tr>
+        </thead>
+        <tbody id="compare-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <p class="text-center text-muted small">
+    Trained on the CEAS and Nazario phishing email datasets, using TF-IDF and a
+    Naive Bayes / Logistic Regression / SVM ensemble.
+  </p>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
