@@ -11,7 +11,6 @@ label = 0 means the email is a normal (ham) email
 import re
 import pandas as pd
 
-
 def clean_text(text):
     if type(text) != str:
         return ""
