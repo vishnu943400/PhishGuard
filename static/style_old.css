@@ -1,0 +1,27 @@
+/* Just a few small tweaks on top of Bootstrap's default styling */
+
+body {
+    background-color: #f5f5f5;
+}
+
+textarea {
+    font-family: inherit;
+}
+
+.alert.spam {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+.alert.ham {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+#confidence-bar.spam {
+    background-color: #dc3545;
+}
+
+#confidence-bar.ham {
+    background-color: #198754;
+}

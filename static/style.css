@@ -1,7 +1,24 @@
-/* Just a few small tweaks on top of Bootstrap's default styling */
+/* Small tweaks on top of Bootstrap's default styling */
 
 body {
-    background-color: #f5f5f5;
+    background-color: #f7f8fc;
+    background-image: radial-gradient(circle, #d8dcec 1.5px, transparent 1.5px);
+    background-size: 26px 26px;
+}
+
+h1 {
+    color: #312e81;
+}
+
+.card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(49, 46, 129, 0.08);
+}
+
+.btn-primary {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
 }
 
 textarea {
@@ -11,11 +28,13 @@ textarea {
 .alert.spam {
     background-color: #f8d7da;
     color: #842029;
+    border-radius: 10px;
 }
 
 .alert.ham {
     background-color: #d1e7dd;
     color: #0f5132;
+    border-radius: 10px;
 }
 
 #confidence-bar.spam {
