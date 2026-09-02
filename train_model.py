@@ -1,24 +1,3 @@
-"""
-train_model.py
-
-This is the main script for the project. It does everything in order:
-
-1. Load and clean the two datasets, and chart their class balance
-2. Try CountVectorizer vs TfidfVectorizer, and unigrams/bigrams/trigrams
-3. Train 3 models: Naive Bayes, Logistic Regression, SVM
-4. Combine them into an ensemble (majority voting + soft voting)
-5. Evaluate every model (accuracy, precision, recall, F1, confusion matrix)
-   and save a confusion matrix image + a bar chart comparing all models
-6. Run 5-fold cross-validation on the 3 base models, to check results
-   are stable and not just a fluke of one train/test split, and chart
-   the results with error bars
-7. Test cross-dataset performance (train on one dataset, test on the
-   other), and chart it against within-dataset performance
-8. Pick the best model and save it + the vectorizer for the web app
-
-Just run:  python train_model.py
-"""
-
 import os
 import joblib
 import pandas as pd
@@ -39,7 +18,6 @@ from sklearn.metrics import (
     confusion_matrix, ConfusionMatrixDisplay,
 )
 
-# this is where the confusion matrix images and comparison chart get saved
 os.makedirs("plots", exist_ok=True)
 
 from preprocess import load_dataset
@@ -113,7 +91,7 @@ for ngram in ngram_choices:
 # STEP 3: Train the 3 models using TF-IDF with unigrams + bigrams
 # ---------------------------------------------------------------------
 
-print("\nTraining final models with TF-IDF (unigrams + bigrams)...")
+print("\nTraining final models with TF-IDF (unigrams + trigrams)...")
 
 vectorizer = TfidfVectorizer(ngram_range=(1, 3), max_features=20000, stop_words="english")
 X_train = vectorizer.fit_transform(train_text)
@@ -176,8 +154,7 @@ def evaluate(name, model):
     print("Confusion matrix:")
     print(cm)
 
-    # save a picture of the confusion matrix, easier to read than the
-    # plain numbers above when this goes into the dissertation
+    
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=["Ham", "Spam"])
     disp.plot(cmap="Blues", values_format="d")
     plt.title(f"Confusion Matrix - {name}")

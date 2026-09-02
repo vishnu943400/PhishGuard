@@ -1,13 +1,3 @@
-"""
-app.py
-
-This is the Flask web server. It loads the saved model + vectorizer,
-and gives the webpage two things it can ask for:
-
-  /classify         -> just the best model's answer
-  /classify_compare -> every model's answer, for the "compare models" view
-"""
-
 from flask import Flask, render_template, request, jsonify
 import joblib
 

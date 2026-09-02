@@ -1,13 +1,3 @@
-"""
-preprocess.py
-
-(CEAS and Nazario) have the same columns:
-sender, receiver, date, subject, body, label, urls
-
-label = 1 means the email is spam/phishing
-label = 0 means the email is a normal (ham) email
-"""
-
 import re
 import pandas as pd
 
@@ -55,8 +45,6 @@ def load_dataset(csv_path):
 
     return df
 
-
-# quick test - only runs if you run this file directly
 if __name__ == "__main__":
     ceas = load_dataset("data/CEAS.csv")
     nazario = load_dataset("data/Nazario.csv")
