@@ -5,7 +5,7 @@ from preprocess import clean_text
 
 app = Flask(__name__)
 
-# load everything we saved in train_model.py
+
 vectorizer = joblib.load("models/vectorizer.joblib")
 best_model = joblib.load("models/best_model.joblib")
 best_model_name = joblib.load("models/best_model_name.joblib")
@@ -31,7 +31,7 @@ def classify():
     email_vector = vectorizer.transform([cleaned])
 
     if hasattr(best_model, "predict_proba"):
-        # predict_proba gives us [probability of ham, probability of spam]
+        
         probabilities = best_model.predict_proba(email_vector)[0]
         prediction = int(probabilities.argmax())
         confidence = round(probabilities[prediction] * 100, 2)

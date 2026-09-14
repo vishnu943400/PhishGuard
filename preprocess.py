@@ -24,23 +24,17 @@ def load_dataset(csv_path):
     
     df = pd.read_csv(csv_path)
 
-    # some subjects/bodies are empty, fill those in so we don't get errors
     df["subject"] = df["subject"].fillna("")
     df["body"] = df["body"].fillna("")
 
-    # combine subject and body into one string per email
     df["text"] = df["subject"] + " " + df["body"]
 
-    # clean the combined text
     df["text"] = df["text"].apply(clean_text)
 
-    # keep only the columns we need
     df = df[["text", "label"]]
-
-    # remove any rows that ended up empty after cleaning
+    
     df = df[df["text"].str.len() > 0]
 
-    # remove duplicate emails
     df = df.drop_duplicates(subset="text")
 
     return df
