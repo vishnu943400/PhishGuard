@@ -31,7 +31,7 @@ print("Loading datasets...")
 ceas_df = load_dataset("data/CEAS.csv")
 nazario_df = load_dataset("data/Nazario.csv")
 
-# combine both datasets into one big dataset to train the final model on
+# combine both datasets 
 all_data = pd.concat([ceas_df, nazario_df])
 all_data = all_data.drop_duplicates(subset="text")
 
@@ -88,7 +88,7 @@ for ngram in ngram_choices:
     print("TfidfVectorizer,  ngram_range =", ngram, "-> accuracy =", round(acc, 4))
 
 # ---------------------------------------------------------------------
-# STEP 3: Train the 3 models using TF-IDF with unigrams + bigrams
+# STEP 3: Train the 3 models using TF-IDF with unigrams + bigrams + trigrsams
 # ---------------------------------------------------------------------
 
 print("\nTraining final models with TF-IDF (unigrams + trigrams)...")
@@ -105,9 +105,6 @@ nb_model.fit(X_train, train_y)
 lr_model = LogisticRegression(max_iter=1000)
 lr_model.fit(X_train, train_y)
 
-# SVM - LinearSVC doesn't give probabilities by default, and we need
-# probabilities for soft voting later, so we wrap it in
-# CalibratedClassifierCV, which adds probability estimates.
 svm_model = CalibratedClassifierCV(LinearSVC(), cv=3)
 svm_model.fit(X_train, train_y)
 
@@ -179,7 +176,7 @@ results_df = pd.DataFrame(results).sort_values("f1", ascending=False)
 print("\nAll models, best first:")
 print(results_df)
 
-# bar chart comparing every model's F1 score, for the dissertation
+# bar chart comparing every model's F1 score,
 plt.figure(figsize=(8, 5))
 plt.bar(results_df["model"], results_df["f1"], color="#4C72B0")
 plt.ylabel("F1 Score")
@@ -310,8 +307,6 @@ models_by_name = {
 }
 best_model = models_by_name[best_name]
 
-# save the vectorizer, the best model, and all models (for the
-# "compare models" feature in the web app)
 joblib.dump(vectorizer, "models/vectorizer.joblib")
 joblib.dump(best_model, "models/best_model.joblib")
 joblib.dump(best_name, "models/best_model_name.joblib")
