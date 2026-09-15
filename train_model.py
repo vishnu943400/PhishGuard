@@ -20,12 +20,10 @@ from sklearn.metrics import (
 
 os.makedirs("plots", exist_ok=True)
 
-from preprocess import load_dataset
-
-
 # ---------------------------------------------------------------------
 # STEP 1: Load and clean both datasets
 # ---------------------------------------------------------------------
+from preprocess import load_dataset
 
 print("Loading datasets...")
 ceas_df = load_dataset("data/CEAS.csv")
